@@ -1,0 +1,7 @@
+body { font-family: Arial; margin:0; background:#0f172a; color:white; }
+header { background:#1e293b; padding:15px; text-align:center; }
+.container { padding:20px; }
+input { padding:8px; margin:5px; border-radius:8px; border:none; }
+button { padding:8px; border:none; border-radius:8px; background:#22c55e; color:white; }
+.card { background:#1e293b; padding:10px; border-radius:10px; margin-top:10px; }
+.hidden { display:none; }

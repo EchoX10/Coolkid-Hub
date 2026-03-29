@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downloads</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body onload="verificar()">
+
+<header>
+<h1>📦 Downloads</h1>
+<button onclick="logout()">Sair</button>
+</header>
+
+<div class="container">
+
+<input id="pesquisa" placeholder="Pesquisar..." oninput="carregar()">
+
+<div id="lista"></div>
+
+<div id="adminArea" class="hidden">
+<h3>Adicionar</h3>
+<input id="nomeApp" placeholder="Nome">
+<input id="linkApp" placeholder="Link">
+<button onclick="adicionar()">Adicionar</button>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
