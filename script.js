@@ -20,7 +20,7 @@ function loginAdmin(){
 
 function logout(){
  localStorage.removeItem("tipo");
- window.location = "inicio.html";
+ window.location = "index.html";
 }
 
 function verificar(){
