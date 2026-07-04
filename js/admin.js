@@ -108,5 +108,15 @@ window.addEventListener("DOMContentLoaded", () => {
         carregarPostsAdmin();
     }
 
+    window.deletarPost = deletarPost;
+
+    checkUser();
+});            .from("posts")
+            .delete()
+            .eq("id", id);
+
+        carregarPostsAdmin();
+    }
+
     carregarPostsAdmin();
 });
