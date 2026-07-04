@@ -1,21 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Início</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Coolkid Hub</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
 </head>
 <body>
 
-<div class="container">
-<h2>Como deseja entrar?</h2>
+<header>
+    <h1>🔥 Coolkid Hub</h1>
+</header>
 
-<button onclick="entrarVisitante()">Entrar como visitante</button>
-<button onclick="irAdmin()">Entrar como admin</button>
+<div class="container">
+
+    <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="🔎 Pesquisar posts..."
+    >
+
+    <div id="posts" class="grid">
+
+        <div class="loading">
+            Carregando posts...
+        </div>
+
+    </div>
 
 </div>
 
-<script src="script.js"></script>
+<script src="js/app.js"></script>
+
 </body>
 </html>
