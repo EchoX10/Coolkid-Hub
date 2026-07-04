@@ -1,1 +1,193 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
+body{
+    background:#0f1115;
+    color:#fff;
+}
+
+header{
+    width:100%;
+    padding:18px;
+    background:#181c24;
+    box-shadow:0 2px 10px rgba(0,0,0,.3);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+header h1{
+    font-size:26px;
+    text-align:center;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.search{
+    width:100%;
+    padding:14px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:#202530;
+    color:#fff;
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+.search::placeholder{
+    color:#999;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:#1b2028;
+    border-radius:16px;
+    padding:18px;
+    transition:.25s;
+    border:1px solid #2b313d;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+}
+
+.card h2{
+    font-size:20px;
+    margin-bottom:10px;
+    word-break:break-word;
+}
+
+.card p{
+    color:#bfbfbf;
+    margin-bottom:18px;
+    word-break:break-all;
+}
+
+.buttons{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+button,
+.btn{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    text-decoration:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:.2s;
+}
+
+.btn-open{
+    background:#2ecc71;
+    color:white;
+}
+
+.btn-open:hover{
+    background:#27ae60;
+}
+
+.btn-share{
+    background:#3498db;
+    color:white;
+}
+
+.btn-share:hover{
+    background:#2980b9;
+}
+
+.btn-edit{
+    background:#f39c12;
+    color:white;
+}
+
+.btn-edit:hover{
+    background:#d68910;
+}
+
+.btn-delete{
+    background:#e74c3c;
+    color:white;
+}
+
+.btn-delete:hover{
+    background:#c0392b;
+}
+
+.form{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    max-width:650px;
+    margin:auto;
+}
+
+.form input{
+    padding:14px;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    background:#202530;
+    color:white;
+    font-size:16px;
+}
+
+.form button{
+    background:#2ecc71;
+    color:white;
+}
+
+.empty{
+    text-align:center;
+    color:#aaa;
+    margin-top:40px;
+    font-size:18px;
+}
+
+.loading{
+    text-align:center;
+    margin-top:50px;
+    color:#bbb;
+    font-size:18px;
+}
+
+@media(max-width:600px){
+
+    header h1{
+        font-size:22px;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    button,
+    .btn{
+        font-size:15px;
+    }
+
+}
