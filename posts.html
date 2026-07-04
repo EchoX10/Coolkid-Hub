@@ -1,33 +1,144 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Downloads</title>
-<link rel="stylesheet" href="style.css">
+<title>Coolkid Hub</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#111;
+  color:white;
+  margin:0;
+  padding:20px;
+}
+
+input, button{
+  padding:10px;
+  margin:5px 0;
+  width:100%;
+  border-radius:8px;
+  border:none;
+}
+
+button{
+  background:#4caf50;
+  color:white;
+  cursor:pointer;
+}
+
+.card{
+  background:#222;
+  padding:10px;
+  margin-top:10px;
+  border-radius:10px;
+}
+</style>
+
 </head>
-<body onload="verificar()">
+<body>
 
-<header>
-<h1>📦 Downloads</h1>
-<button onclick="logout()">Sair</button>
-</header>
+<h2>🔥 Coolkid Hub</h2>
 
-<div class="container">
+<input id="nomeApp" placeholder="Nome do post">
+<input id="linkApp" placeholder="Link do post">
+<button onclick="adicionar()">Adicionar</button>
 
 <input id="pesquisa" placeholder="Pesquisar..." oninput="carregar()">
 
 <div id="lista"></div>
 
-<div id="adminArea" class="hidden">
-<h3>Adicionar</h3>
-<input id="nomeApp" placeholder="Nome">
-<input id="linkApp" placeholder="Link">
-<button onclick="adicionar()">Adicionar</button>
-</div>
+<script>
+function gerarID(){
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
 
-</div>
+// adicionar post
+function adicionar(){
+  let lista = JSON.parse(localStorage.lista || "[]");
 
-<script src="script.js"></script>
+  lista.push({
+    id: gerarID(),
+    nome: nomeApp.value,
+    link: linkApp.value
+  });
+
+  localStorage.lista = JSON.stringify(lista);
+
+  nomeApp.value = "";
+  linkApp.value = "";
+
+  carregar();
+}
+
+// compartilhar
+function compartilhar(id){
+  let url = window.location.origin + window.location.pathname + "?id=" + id;
+
+  navigator.clipboard.writeText(url);
+  alert("Link copiado:\n" + url);
+}
+
+// deletar
+function deletar(index){
+  let lista = JSON.parse(localStorage.lista || "[]");
+  lista.splice(index,1);
+  localStorage.lista = JSON.stringify(lista);
+  carregar();
+}
+
+// carregar posts
+function carregar(){
+  let lista = JSON.parse(localStorage.lista || "[]");
+  let div = document.getElementById("lista");
+  let filtro = document.getElementById("pesquisa").value.toLowerCase();
+
+  let params = new URLSearchParams(window.location.search);
+  let id = params.get("id");
+
+  div.innerHTML = "";
+
+  // abrir post único
+  if(id){
+    let item = lista.find(p => p.id == id);
+
+    if(item){
+      div.innerHTML = `
+        <div class="card">
+          <h3>${item.nome}</h3>
+          <a href="${item.link}" target="_blank">
+            <button>Abrir</button>
+          </a>
+        </div>
+      `;
+    } else {
+      div.innerHTML = "<p>Post não encontrado</p>";
+    }
+    return;
+  }
+
+  // lista normal
+  lista.forEach((item, i) => {
+    if(filtro && !item.nome.toLowerCase().includes(filtro)) return;
+
+    div.innerHTML += `
+      <div class="card">
+        <h3>${item.nome}</h3>
+
+        <a href="${item.link}" target="_blank">
+          <button>Abrir</button>
+        </a>
+
+        <button onclick="compartilhar('${item.id}')">📤 Compartilhar</button>
+
+        <button onclick="deletar(${i})" style="background:#e74c3c">🗑️</button>
+      </div>
+    `;
+  });
+}
+
+carregar();
+</script>
+
 </body>
 </html>
