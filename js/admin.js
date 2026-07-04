@@ -18,19 +18,36 @@ const listaAdmin = document.getElementById("listaAdmin");
 // ----------------------
 document.getElementById("btnLogin").onclick = async () => {
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.value,
-        password: senha.value
-    });
+    try {
 
-    if (error) {
-        alert("Erro no login");
-        console.log(error);
-        return;
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email.value,
+            password: senha.value
+        });
+
+        console.log("LOGIN DATA:", data);
+        console.log("LOGIN ERROR:", error);
+
+        if (error) {
+            alert("Erro no login: " + error.message);
+            return;
+        }
+
+        if (!data || !data.user) {
+            alert("Login falhou (sem usuário retornado)");
+            return;
+        }
+
+        user = data.user;
+
+        alert("Login OK!");
+
+        loginOk();
+
+    } catch (err) {
+        console.log(err);
+        alert("Erro inesperado no login");
     }
-
-    user = data.user;
-    loginOk();
 };
 
 // ----------------------
@@ -51,11 +68,19 @@ document.getElementById("btnLogout").onclick = async () => {
 // ----------------------
 async function checkUser() {
 
-    const { data } = await supabase.auth.getUser();
+    try {
 
-    if (data.user) {
-        user = data.user;
-        loginOk();
+        const { data, error } = await supabase.auth.getUser();
+
+        console.log("SESSION:", data, error);
+
+        if (data && data.user) {
+            user = data.user;
+            loginOk();
+        }
+
+    } catch (err) {
+        console.log("Erro sessão:", err);
     }
 }
 
@@ -66,14 +91,14 @@ function loginOk() {
 }
 
 // ----------------------
-// GERAR CÓDIGO 6 CHARS
+// GERAR CÓDIGO
 // ----------------------
 function gerarCodigo() {
     return Math.random().toString(36).substring(2, 8);
 }
 
 // ----------------------
-// ADICIONAR POST
+// CRIAR POST
 // ----------------------
 document.getElementById("btnSalvar").onclick = async () => {
 
@@ -84,7 +109,7 @@ document.getElementById("btnSalvar").onclick = async () => {
 
     const codigo = gerarCodigo();
 
-    const { error } = await supabase
+    const { data, error } = await supabase
         .from("posts")
         .insert([{
             nome: nome.value,
@@ -92,9 +117,10 @@ document.getElementById("btnSalvar").onclick = async () => {
             codigo: codigo
         }]);
 
+    console.log("INSERT:", data, error);
+
     if (error) {
-        alert("Erro ao salvar");
-        console.log(error);
+        alert("Erro ao salvar: " + error.message);
         return;
     }
 
@@ -116,9 +142,10 @@ async function carregarPostsAdmin() {
         .select("*")
         .order("criado_em", { ascending: false });
 
+    console.log("POSTS:", data, error);
+
     if (error) {
         listaAdmin.innerHTML = "<p>Erro ao carregar</p>";
-        console.log(error);
         return;
     }
 
@@ -131,7 +158,7 @@ async function carregarPostsAdmin() {
 
         div.innerHTML = `
             <h2>${post.nome}</h2>
-            <p>Código: ${post.codigo}</p>
+            <p>${post.codigo}</p>
 
             <div class="buttons">
 
@@ -151,7 +178,7 @@ async function carregarPostsAdmin() {
 }
 
 // ----------------------
-// DELETAR POST
+// DELETE
 // ----------------------
 async function deletarPost(id) {
 
@@ -161,13 +188,12 @@ async function deletarPost(id) {
         .eq("id", id);
 
     if (error) {
-        alert("Erro ao deletar");
-        console.log(error);
+        alert("Erro ao deletar: " + error.message);
         return;
     }
 
     carregarPostsAdmin();
 }
 
-// iniciar sistema
+// iniciar
 checkUser();
