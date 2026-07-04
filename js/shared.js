@@ -1,44 +1,84 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+const container = document.getElementById("post");
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+async function carregarPost() {
 
-    <title>Post Compartilhado • Coolkid Hub</title>
+    const params = new URLSearchParams(window.location.search);
+    const codigo = params.get("post");
 
-    <link rel="stylesheet" href="../css/style.css">
+    if (!codigo) {
+        container.innerHTML = `
+            <div class="empty">
+                Nenhum código de post foi informado.
+            </div>
+        `;
+        return;
+    }
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/supabase.js"></script>
+    const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("codigo", codigo)
+        .single();
 
-</head>
-<body>
+    if (error || !data) {
+        container.innerHTML = `
+            <div class="empty">
+                Post não encontrado.
+            </div>
+        `;
+        console.error(error);
+        return;
+    }
 
-<header>
-    <h1>🔥 Coolkid Hub</h1>
-</header>
+    document.title = data.nome + " • Coolkid Hub";
 
-<div class="container">
+    container.innerHTML = `
+        <div class="card">
 
-    <div id="post">
+            <h2>${data.nome}</h2>
 
-        <div class="loading">
-            Carregando post...
+            <p>${data.link}</p>
+
+            <div class="buttons">
+
+                <a
+                    class="btn btn-open"
+                    href="${data.link}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    🔗 Abrir
+                </a>
+
+                <button
+                    class="btn-share"
+                    onclick="compartilhar()"
+                >
+                    📤 Compartilhar
+                </button>
+
+            </div>
+
         </div>
+    `;
 
-    </div>
+    window.linkCompartilhar = window.location.href;
+}
 
-    <br>
+async function compartilhar() {
 
-    <a href="../" class="btn btn-open">
-        ⬅ Voltar para a página inicial
-    </a>
+    try {
 
-</div>
+        await navigator.clipboard.writeText(window.linkCompartilhar);
 
-<script src="../js/shared.js"></script>
+        alert("Link copiado!");
 
-</body>
-</html>
+    } catch {
+
+        prompt("Copie o link:", window.linkCompartilhar);
+
+    }
+
+}
+
+carregarPost();
