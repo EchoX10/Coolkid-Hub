@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin • Coolkid Hub</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+
+</head>
+<body>
+
+<header>
+    <h1>👤 Painel do Administrador</h1>
+</header>
+
+<div class="container">
+
+    <!-- Login -->
+    <div id="loginBox">
+
+        <div class="form">
+
+            <input
+                type="email"
+                id="email"
+                placeholder="E-mail"
+            >
+
+            <input
+                type="password"
+                id="senha"
+                placeholder="Senha"
+            >
+
+            <button id="btnLogin">
+                Entrar
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Painel -->
+    <div id="adminBox" style="display:none;">
+
+        <div class="form">
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Nome do post"
+            >
+
+            <input
+                type="url"
+                id="link"
+                placeholder="https://..."
+            >
+
+            <button id="btnSalvar">
+                ➕ Publicar Post
+            </button>
+
+        </div>
+
+        <br>
+
+        <div id="listaAdmin" class="grid">
+
+            <div class="loading">
+                Carregando...
+            </div>
+
+        </div>
+
+        <br>
+
+        <button
+            id="btnLogout"
+            class="btn-delete"
+        >
+            🚪 Sair
+        </button>
+
+    </div>
+
+</div>
+
+<script src="../js/admin.js"></script>
+
+</body>
+</html>
