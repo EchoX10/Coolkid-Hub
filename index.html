@@ -3,45 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 Coolkid Hub</title>
+    <meta name="description" content="Coolkid Hub: uma biblioteca comunitária para descobrir mods, addons, mapas, aplicativos e recursos digitais.">
+    <meta name="theme-color" content="#0a0d12">
+    <title>Coolkid Hub — sua biblioteca de recursos</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
 </head>
-<body>
+<body class="public-page">
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
 
-<header>
-    <h1>🔥 Coolkid Hub</h1>
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <a class="brand" href="./" aria-label="Coolkid Hub, página inicial">
+                <span class="brand-mark">✦</span>
+                <span class="brand-copy">
+                    <strong>Coolkid <em>Hub</em></strong>
+                    <small>community vault</small>
+                </span>
+            </a>
 
-    <!-- BOTÃO ADMIN -->
-    <a href="admin" class="btn btn-open" style="max-width:180px;margin:10px auto;display:block;">
-        🔐 Admin
-    </a>
-</header>
+            <nav class="main-nav" aria-label="Navegação principal">
+                <a class="nav-link active" href="#biblioteca">Biblioteca</a>
+                <a class="nav-link" href="#sobre">Sobre o hub</a>
+            </nav>
 
-<div class="container">
-
-    <input
-        type="text"
-        id="search"
-        class="search"
-        placeholder="🔎 Pesquisar posts..."
-    >
-
-    <div id="posts" class="grid">
-
-        <div class="loading">
-            Carregando posts...
+            <a class="btn btn-small btn-outline" href="admin/" aria-label="Abrir painel administrativo">
+                <span aria-hidden="true">⌘</span> Admin
+            </a>
         </div>
+    </header>
 
-    </div>
+    <main>
+        <section class="hero container" id="inicio">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="eyebrow-dot"></span> CURATED COMMUNITY HUB</p>
+                <h1>Seu próximo <span class="text-gradient">achado favorito</span> está aqui.</h1>
+                <p class="hero-description">Um espaço rápido e organizado para encontrar mods, addons, mapas, aplicativos e links que valem o download.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#biblioteca">Explorar biblioteca <span aria-hidden="true">↘</span></a>
+                    <a class="btn btn-ghost" href="#sobre">Como funciona</a>
+                </div>
+                <p class="hero-status"><span class="status-pulse"></span><span id="heroStatus">Sincronizando a biblioteca...</span></p>
+            </div>
 
-</div>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="orbit orbit-large"></div>
+                <div class="orbit orbit-small"></div>
+                <div class="hero-glow"></div>
+                <div class="floating-tag tag-top"><span>✦</span> new drop</div>
+                <div class="showcase-card showcase-back"></div>
+                <div class="showcase-card showcase-mid"></div>
+                <div class="showcase-card showcase-front">
+                    <div class="showcase-topline"><span class="mini-label">COOLKID / 001</span><span>↗</span></div>
+                    <div class="showcase-icon">✦</div>
+                    <div class="showcase-title">Descobertas<br><strong>sem ruído.</strong></div>
+                    <div class="showcase-lines"><span></span><span></span><span></span></div>
+                    <div class="showcase-footer"><span>explore the vault</span><span>04:20</span></div>
+                </div>
+                <div class="floating-tag tag-bottom"><span>◈</span> 24/7 online</div>
+            </div>
+        </section>
 
-<script src="js/app.js"></script>
+        <section class="stats-strip container" aria-label="Resumo da biblioteca">
+            <div class="stat-item">
+                <strong id="statPosts">—</strong>
+                <span>recursos publicados</span>
+            </div>
+            <div class="stat-item">
+                <strong id="statCategories">—</strong>
+                <span>categorias ativas</span>
+            </div>
+            <div class="stat-item">
+                <strong id="statFavorites">0</strong>
+                <span>salvos neste dispositivo</span>
+            </div>
+            <div class="stat-note"><span class="live-dot"></span> Atualizado em tempo real</div>
+        </section>
 
+        <section class="library-section container" id="biblioteca">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">THE VAULT</p>
+                    <h2>Encontre algo <span class="text-gradient">incrível.</span></h2>
+                </div>
+                <p class="section-intro">Pesquise por nome, categoria ou domínio. Salve seus favoritos e compartilhe qualquer descoberta em um clique.</p>
+            </div>
+
+            <div class="library-toolbar" role="search">
+                <div class="search-shell">
+                    <span class="search-icon" aria-hidden="true">⌕</span>
+                    <label class="sr-only" for="search">Pesquisar na biblioteca</label>
+                    <input type="search" id="search" autocomplete="off" placeholder="Pesquisar por nome, categoria ou link...">
+                    <button type="button" id="clearSearch" class="clear-search" aria-label="Limpar pesquisa" hidden>×</button>
+                </div>
+                <div class="toolbar-actions">
+                    <label class="select-shell">
+                        <span class="sr-only">Ordenar resultados</span>
+                        <select id="sortSelect" aria-label="Ordenar resultados">
+                            <option value="recent">Mais recentes</option>
+                            <option value="name">Nome A–Z</option>
+                            <option value="favorites">Favoritos primeiro</option>
+                        </select>
+                    </label>
+                    <button type="button" id="favoritesToggle" class="btn btn-filter" aria-pressed="false"><span aria-hidden="true">☆</span> Salvos</button>
+                </div>
+            </div>
+
+            <div id="categoryChips" class="category-chips" aria-label="Filtrar por categoria"></div>
+
+            <div class="results-bar">
+                <p id="resultSummary">Carregando biblioteca...</p>
+                <button type="button" id="retryButton" class="text-button" hidden>Tentar novamente ↗</button>
+            </div>
+
+            <div id="posts" class="post-grid" aria-live="polite" aria-busy="true">
+                <div class="state-card loading-state"><span class="loader"></span><p>Carregando os achados da comunidade...</p></div>
+            </div>
+        </section>
+
+        <section class="about-section container" id="sobre">
+            <div class="section-heading compact-heading">
+                <div>
+                    <p class="eyebrow">WHY COOLKID?</p>
+                    <h2>Menos rolagem.<br><span class="text-gradient">Mais descoberta.</span></h2>
+                </div>
+                <p class="section-intro">O hub foi pensado para transformar uma lista de links em uma pequena experiência de descoberta.</p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <span class="feature-number">01</span>
+                    <div class="feature-icon">⌕</div>
+                    <h3>Busca inteligente</h3>
+                    <p>Filtre rapidamente por nome, categoria ou domínio e encontre o que você precisa sem perder tempo.</p>
+                </article>
+                <article class="feature-card feature-card-accent">
+                    <span class="feature-number">02</span>
+                    <div class="feature-icon">♡</div>
+                    <h3>Seus favoritos</h3>
+                    <p>Salve seus links preferidos neste dispositivo para montar uma coleção pessoal e acessível.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">03</span>
+                    <div class="feature-icon">↗</div>
+                    <h3>Compartilhe fácil</h3>
+                    <p>Todo recurso tem um link próprio, pronto para copiar, abrir ou compartilhar com a sua comunidade.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <a class="brand" href="#inicio" aria-label="Voltar ao início">
+                <span class="brand-mark">✦</span>
+                <span class="brand-copy"><strong>Coolkid <em>Hub</em></strong><small>made for curious minds</small></span>
+            </a>
+            <p>Uma biblioteca comunitária em constante evolução.</p>
+            <span class="footer-code">CKH / 2026</span>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="js/app.js"></script>
 </body>
 </html>

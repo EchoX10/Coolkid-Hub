@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Um recurso compartilhado pela comunidade Coolkid Hub.">
+    <meta name="theme-color" content="#0a0d12">
+    <title>Recurso compartilhado — Coolkid Hub</title>
 
-    <title>Post Compartilhado • Coolkid Hub</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase.js"></script>
-
 </head>
-<body>
+<body class="shared-page">
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
 
-<header>
-    <h1>🔥 Coolkid Hub</h1>
-</header>
-
-<div class="container">
-
-    <div id="post">
-
-        <div class="loading">
-            Carregando post...
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <a class="brand" href="../" aria-label="Voltar para a página inicial">
+                <span class="brand-mark">✦</span>
+                <span class="brand-copy"><strong>Coolkid <em>Hub</em></strong><small>shared discovery</small></span>
+            </a>
+            <a class="btn btn-small btn-outline" href="../">Ver biblioteca ↗</a>
         </div>
+    </header>
 
-    </div>
+    <main class="subpage-main container">
+        <section class="subpage-heading">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> SHARED DISCOVERY</p>
+            <h1>Uma descoberta para <span class="text-gradient">você.</span></h1>
+            <p>Alguém da comunidade encontrou este recurso e decidiu compartilhar com você.</p>
+        </section>
 
-    <br>
+        <section class="shared-post-card" aria-live="polite">
+            <div id="post">
+                <div class="state-card loading-state"><span class="loader"></span><p>Carregando descoberta...</p></div>
+            </div>
+            <a href="../" class="back-link">← Explorar toda a biblioteca</a>
+        </section>
+    </main>
 
-    <a href="../" class="btn btn-open">
-        ⬅ Voltar para a página inicial
-    </a>
-
-</div>
-
-<script src="../js/shared.js"></script>
-
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="../js/shared.js"></script>
 </body>
 </html>

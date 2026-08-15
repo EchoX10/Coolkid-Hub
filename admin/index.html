@@ -1,99 +1,117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Painel administrativo do Coolkid Hub.">
+    <meta name="theme-color" content="#0a0d12">
+    <title>Admin — Coolkid Hub</title>
 
-    <title>Admin • Coolkid Hub</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase.js"></script>
-
 </head>
-<body>
+<body class="admin-page">
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
 
-<header>
-    <h1>👤 Painel do Administrador</h1>
-</header>
-
-<div class="container">
-
-    <!-- Login -->
-    <div id="loginBox">
-
-        <div class="form">
-
-            <input
-                type="email"
-                id="email"
-                placeholder="E-mail"
-            >
-
-            <input
-                type="password"
-                id="senha"
-                placeholder="Senha"
-            >
-
-            <button id="btnLogin">
-                Entrar
-            </button>
-
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <a class="brand" href="../" aria-label="Voltar para a página inicial">
+                <span class="brand-mark">✦</span>
+                <span class="brand-copy"><strong>Coolkid <em>Hub</em></strong><small>control room</small></span>
+            </a>
+            <nav class="main-nav" aria-label="Navegação administrativa">
+                <a class="nav-link active" href="./">Gerenciar</a>
+                <a class="nav-link" href="../">Ver biblioteca</a>
+            </nav>
+            <a class="btn btn-small btn-outline" href="../">← Voltar</a>
         </div>
+    </header>
 
-    </div>
+    <main class="subpage-main container">
+        <section class="subpage-heading">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> CONTROL ROOM</p>
+            <h1>Cuide do seu <span class="text-gradient">vault.</span></h1>
+            <p>Publique novos achados, mantenha os links organizados e deixe a biblioteca sempre pronta para a próxima descoberta.</p>
+        </section>
 
-    <!-- Painel -->
-    <div id="adminBox" style="display:none;">
+        <section id="loginBox" class="login-shell" aria-labelledby="loginTitle">
+            <div class="subpage-card">
+                <p class="eyebrow">ACCESS REQUIRED</p>
+                <h2 id="loginTitle">Entrar no painel</h2>
+                <form id="loginForm" novalidate>
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+                        </div>
+                        <div class="form-field full">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" autocomplete="current-password" placeholder="Sua senha" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button id="btnLogin" class="btn btn-primary" type="submit">Entrar no control room <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+                </form>
+                <p class="login-note">O acesso é protegido pelo Supabase Auth. Apenas contas autorizadas conseguem publicar ou apagar recursos.</p>
+            </div>
+        </section>
 
-        <div class="form">
-
-            <input
-                type="text"
-                id="nome"
-                placeholder="Nome do post"
-            >
-
-            <input
-                type="url"
-                id="link"
-                placeholder="https://..."
-            >
-
-            <button id="btnSalvar">
-                ➕ Publicar Post
-            </button>
-
-        </div>
-
-        <br>
-
-        <div id="listaAdmin" class="grid">
-
-            <div class="loading">
-                Carregando...
+        <section id="adminBox" hidden aria-labelledby="adminTitle">
+            <div class="session-bar">
+                <p id="sessionLabel">Sessão ativa.</p>
+                <button id="btnLogout" class="btn btn-small btn-outline" type="button">Sair da conta</button>
             </div>
 
-        </div>
+            <div class="subpage-card">
+                <p class="eyebrow" id="formEyebrow">NEW DROP</p>
+                <h2 id="adminTitle">Publicar um recurso</h2>
+                <form id="postForm" novalidate>
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="nome">Nome do recurso</label>
+                            <input type="text" id="nome" maxlength="120" placeholder="Ex.: Pack de texturas neon" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="link">Link de destino</label>
+                            <input type="url" id="link" placeholder="https://..." required>
+                        </div>
+                        <div class="form-field">
+                            <label for="categoria">Categoria <span>(opcional)</span></label>
+                            <input type="text" id="categoria" maxlength="40" placeholder="Ex.: Minecraft">
+                        </div>
+                        <div class="form-field full">
+                            <label for="descricao">Descrição <span>(opcional)</span></label>
+                            <textarea id="descricao" maxlength="220" placeholder="Uma frase curta para contextualizar este recurso."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button id="btnSalvar" class="btn btn-primary" type="submit">Publicar recurso <span aria-hidden="true">↗</span></button>
+                        <button id="btnCancelarEdicao" class="btn btn-ghost" type="button" hidden>Cancelar edição</button>
+                    </div>
+                    <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+                </form>
+            </div>
 
-        <br>
+            <div class="admin-toolbar">
+                <div>
+                    <h2>Recursos publicados</h2>
+                    <p id="adminSummary">Carregando...</p>
+                </div>
+                <button id="btnRefresh" class="btn btn-small btn-outline" type="button">↻ Atualizar</button>
+            </div>
+            <div id="listaAdmin" class="admin-list" aria-live="polite" aria-busy="true"></div>
+        </section>
+    </main>
 
-        <button
-            id="btnLogout"
-            class="btn-delete"
-        >
-            🚪 Sair
-        </button>
-
-    </div>
-
-</div>
-
-<script src="../js/admin.js"></script>
-
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="../js/admin.js"></script>
 </body>
 </html>
